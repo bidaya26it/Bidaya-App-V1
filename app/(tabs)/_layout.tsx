@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import React from "react";
@@ -7,15 +6,6 @@ import { HapticTab } from "@/components/haptic-tab";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
-=======
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import { Ionicons } from "@expo/vector-icons";
-import { Tabs } from 'expo-router';
-import React from 'react';
->>>>>>> feature/subscription
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -128,42 +118,10 @@ export default function TabLayout() {
         }}
       />
 
-      <Tabs.Screen
-        name="signup-step-1"
-        options={{
-          href: null,
-        }}
-      />
-
-      <Tabs.Screen
-        name="signup-step-2"
-        options={{
-          href: null,
-        }}
-      />
-
-      <Tabs.Screen
-        name="blueprint-question"
-        options={{
-          href: null,
-        }}
-      />
-
-      <Tabs.Screen
-        name="modal"
-        options={{
-          href: null,
-        }}
-      />
-      <Tabs.Screen
-  name="subscription"
-  options={{
-    title: "Plans",
-    tabBarIcon: ({ color, size }) => (
-      <Ionicons name="diamond" size={size} color={color} />
-    ),
-  }}
-/>
+      <Tabs.Screen name="signup-step-1" options={{ href: null }} />
+      <Tabs.Screen name="signup-step-2" options={{ href: null }} />
+      <Tabs.Screen name="blueprint-question" options={{ href: null }} />
+      <Tabs.Screen name="modal" options={{ href: null }} />
     </Tabs>
   );
 }
