@@ -51,3 +51,34 @@ export const Fonts = Platform.select({
     mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
   },
 });
+export const COLORS = {
+  bg: "#F8F3E7",
+  navy: "#0A4A73",
+  gold: "#D8AF4F",
+  goldDark: "#C89A2E",
+  white: "#FFFFFF",
+  text: "#103B5C",
+  muted: "#6C7A86",
+  lightCard: "#FFF8EA",
+  border: "#E2D4B1",
+  success: "#2E8B57",
+  gray: "#D9D9D9",
+  black: "#111111",
+};
+
+export const SPACING = {
+  xs: 6,
+  sm: 10,
+  md: 16,
+  lg: 20,
+  xl: 28,
+  xxl: 36,
+};
+
+export const RADIUS = {
+  sm: 10,
+  md: 16,
+  lg: 22,
+  xl: 28,
+  pill: 999,
+};

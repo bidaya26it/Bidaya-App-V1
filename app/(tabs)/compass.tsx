@@ -1,516 +1,405 @@
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
 import {
+    Image,
+    SafeAreaView,
     ScrollView,
     StyleSheet,
     Text,
     TouchableOpacity,
     View,
 } from "react-native";
+import BidayaMenu from "../../components/BidayaMenu";
 
 const COLORS = {
   cream: "#F7F5EC",
-  darkBlue: "#004B6B",
-  deepBlue: "#003F5C",
+  navy: "#004B6B",
+  deepNavy: "#003F5C",
   gold: "#D5A12D",
-  lightGold: "#EBCB78",
+  goldLight: "#E1C04F",
   white: "#FFFFFF",
-  softGold: "#F3D98B",
-  paleBlue: "#7FAEC4",
 };
 
 export default function CompassScreen() {
+  const router = useRouter();
+  const [menuVisible, setMenuVisible] = useState(false);
+
   return (
-    <View style={styles.safe}>
-      <ScrollView contentContainerStyle={styles.container}>
-        {/* Header */}
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView
+        style={styles.screen}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* HEADER */}
         <View style={styles.header}>
-          <TouchableOpacity>
-            <Ionicons name="arrow-back" size={25} color={COLORS.darkBlue} />
+          <TouchableOpacity onPress={() => router.back()} style={styles.headerIcon}>
+            <Ionicons name="arrow-back" size={28} color={COLORS.navy} />
           </TouchableOpacity>
 
-          <Text style={styles.headerTitle}>My Compass</Text>
+          <View style={styles.headerCenter}>
+            <View style={styles.logoTitleRow}>
+              <Text style={styles.headerTitle}>My C</Text>
 
-          <TouchableOpacity>
-            <Ionicons name="menu" size={31} color={COLORS.darkBlue} />
-          </TouchableOpacity>
-        </View>
+              <Image
+                source={require("../../assets/images/compass-main.png")}
+                style={styles.titleCompassIcon}
+                resizeMode="contain"
+              />
 
-        <Text style={styles.dateText}>Thursday, 13th of November 2026</Text>
-
-        {/* Main Compass Card */}
-        <View style={styles.compassCard}>
-          <Text style={[styles.cornerLabel, styles.topLeftLabel]}>
-            Insights & Reflections
-          </Text>
-
-          <Text style={[styles.cornerLabel, styles.topRightLabel]}>
-            Goals & Dreams
-          </Text>
-
-          <Text style={[styles.cornerLabel, styles.bottomLeftLabel]}>
-            Identity & Values
-          </Text>
-
-          <Text style={[styles.cornerLabel, styles.bottomRightLabel]}>
-            Experiences & Trials
-          </Text>
-
-          <Text style={[styles.cornerSmallText, styles.topLeftSmall]}>
-            Deep realizations,{"\n"}growth thoughts
-          </Text>
-
-          <Text style={[styles.cornerSmallText, styles.topRightSmall]}>
-            Actions related{"\n"}to ambitions
-          </Text>
-
-          <Text style={[styles.cornerSmallText, styles.bottomLeftSmall]}>
-            Reflections, beliefs,{"\n"}or meaningful actions
-          </Text>
-
-          <Text style={[styles.cornerSmallText, styles.bottomRightSmall]}>
-            Internships, volunteering,{"\n"}new activities
-          </Text>
-
-          {/* Gold glow */}
-          <View style={styles.glowCircle} />
-
-          {/* Compass star */}
-          <View style={styles.compassStar}>
-            <View style={[styles.needle, styles.needleVertical]} />
-            <View style={[styles.needle, styles.needleHorizontal]} />
-            <View style={[styles.needle, styles.needleDiagonalOne]} />
-            <View style={[styles.needle, styles.needleDiagonalTwo]} />
-
-            <View style={styles.centerDot} />
-
-            <Text style={[styles.directionText, styles.north]}>N</Text>
-            <Text style={[styles.directionText, styles.south]}>S</Text>
-            <Text style={[styles.directionText, styles.east]}>E</Text>
-            <Text style={[styles.directionText, styles.west]}>W</Text>
+              <Text style={styles.headerTitle}>mpass</Text>
+            </View>
           </View>
+
+          <TouchableOpacity
+            onPress={() => setMenuVisible(true)}
+            style={styles.headerIcon}
+          >
+            <Ionicons name="menu" size={34} color={COLORS.navy} />
+          </TouchableOpacity>
         </View>
 
-        {/* Weekly Direction Insight */}
-        <View style={styles.insightCard}>
-          <Text style={styles.cardTitle}>Weekly Direction Insight</Text>
-          <Text style={styles.cardText}>
-            You've reflected deeply on your values and{"\n"}future goals.
-          </Text>
-        </View>
+        <Text style={styles.headerDate}>
+          Thursday, 13ᵗʰ of November 2026
+        </Text>
 
-        {/* Weekly Summary */}
-        <View style={styles.summaryCard}>
-          <Text style={styles.cardTitle}>Weekly Summary</Text>
+        {/* COMPASS CARD */}
+        <View style={styles.cardOuter}>
+          <View style={styles.compassCardInner}>
+            <Image
+              source={require("../../assets/images/compass-main.png")}
+              style={styles.mainCompass}
+              resizeMode="contain"
+            />
 
-          <View style={styles.summaryContent}>
-            <View style={styles.summaryLabels}>
-              <Text style={styles.summaryLabel}>experiences & trials</Text>
-              <Text style={styles.summaryLabel}>insights & reflections</Text>
-              <Text style={styles.summaryLabel}>goals & dreams</Text>
-              <Text style={styles.summaryLabel}>identity & values</Text>
+            {/* Left lines */}
+            <View style={[styles.connectorLine, styles.lineTopLeft]} />
+            <View style={[styles.connectorLine, styles.lineMidLeft]} />
+
+            {/* Right lines */}
+            <View style={[styles.connectorLine, styles.lineMidRight]} />
+            <View style={[styles.connectorLine, styles.lineBottomRight]} />
+
+            {/* Labels */}
+            <View style={styles.labelTopLeft}>
+              <Text style={styles.compassLabelTitle}>Insights & Reflections</Text>
+              <Text style={styles.compassLabelSub}>
+                Journaling, prompts, or{"\n"}personal thoughts
+              </Text>
             </View>
 
-            <View style={styles.chartBox}>
-              <View style={[styles.chartLine, styles.lineOne]} />
-              <View style={[styles.chartLine, styles.lineTwo]} />
-              <View style={[styles.chartLine, styles.lineThree]} />
-              <View style={[styles.chartLine, styles.lineFour]} />
+            <View style={styles.labelMiddleLeft}>
+              <Text style={styles.compassLabelTitle}>Identity & Values</Text>
+              <Text style={styles.compassLabelSub}>
+                Reflections, beliefs, or{"\n"}meaningful actions.
+              </Text>
+            </View>
 
-              <View style={[styles.chartDot, styles.dotOne]} />
-              <View style={[styles.chartDot, styles.dotTwo]} />
-              <View style={[styles.chartDot, styles.dotThree]} />
-              <View style={[styles.chartDot, styles.dotFour]} />
+            <View style={styles.labelMiddleRight}>
+              <Text style={styles.compassLabelTitle}>Goals & Dreams</Text>
+              <Text style={styles.compassLabelSub}>
+                Actions related to{"\n"}ambitions or future{"\n"}planning.
+              </Text>
+            </View>
+
+            <View style={styles.labelBottomRight}>
+              <Text style={styles.compassLabelTitleWhite}>Experiences & Trials</Text>
+              <Text style={styles.compassLabelSub}>
+                Internships, volunteering, new{"\n"}activities.
+              </Text>
             </View>
           </View>
         </View>
 
-        {/* Explanation Cards */}
-        <View style={styles.explanationGrid}>
-          <CompassMiniCard
-            title="Goals & Dreams"
-            text="Actions related to ambitions or future planning."
-          />
-          <CompassMiniCard
-            title="Identity & Values"
-            text="Reflections, beliefs, or meaningful actions."
-          />
-          <CompassMiniCard
-            title="Insights & Reflections"
-            text="Journaling, prompts, or personal thoughts."
-          />
-          <CompassMiniCard
-            title="Experiences & Trials"
-            text="Internships, volunteering, new activities."
-          />
+        {/* WEEKLY DIRECTION */}
+        <View style={styles.cardOuterSmall}>
+          <View style={styles.insightCardInner}>
+            <Text style={styles.softSectionTitle}>Weekly Direction Insight</Text>
+
+            <Text style={styles.insightText}>
+              You've reflected deeply on your values and{"\n"}future goals.
+            </Text>
+          </View>
+        </View>
+
+        {/* WEEKLY SUMMARY */}
+        <View style={styles.cardOuterSummary}>
+          <View style={styles.summaryCardInner}>
+            <Text style={styles.softSectionTitle}>Weekly Summary</Text>
+
+            <View style={styles.summaryRow}>
+              <View style={styles.legendColumn}>
+                <Text style={styles.legendText}>experiences & trials</Text>
+                <Text style={styles.legendText}>insights & reflections</Text>
+                <Text style={styles.legendText}>goals & dreams</Text>
+                <Text style={styles.legendText}>identity & values</Text>
+              </View>
+
+              <Image
+                source={require("../../assets/images/graph-lines.png")}
+                style={styles.graphImage}
+                resizeMode="contain"
+              />
+            </View>
+          </View>
         </View>
       </ScrollView>
-    </View>
-  );
-}
 
-function CompassMiniCard({ title, text }: { title: string; text: string }) {
-  return (
-    <View style={styles.miniCard}>
-      <Text style={styles.miniTitle}>{title}</Text>
-      <Text style={styles.miniText}>{text}</Text>
-    </View>
+      <BidayaMenu
+        visible={menuVisible}
+        onClose={() => setMenuVisible(false)}
+      />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: {
+  safeArea: {
     flex: 1,
     backgroundColor: COLORS.cream,
   },
 
-  container: {
+  screen: {
+    flex: 1,
     backgroundColor: COLORS.cream,
+  },
+
+  content: {
+    paddingHorizontal: 30,
+    paddingTop: 0,
     paddingBottom: 30,
   },
 
   header: {
-    height: 43,
-    paddingHorizontal: 10,
+    height: 48,
+    marginHorizontal: -30,
+    paddingHorizontal: 26,
     borderBottomWidth: 1,
-    borderBottomColor: "#D7D7D7",
+    borderBottomColor: "#CFCFCF",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+
+  headerIcon: {
+    width: 44,
+    height: 44,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  headerCenter: {
+    flex: 1,
+    alignItems: "center",
+  },
+
+  logoTitleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   headerTitle: {
-    color: COLORS.darkBlue,
-    fontSize: 25,
+    color: COLORS.navy,
+    fontSize: 30,
     fontWeight: "900",
+    lineHeight: 34,
+    letterSpacing: 0.5,
   },
 
-  dateText: {
-    color: COLORS.darkBlue,
-    fontSize: 13,
+  titleCompassIcon: {
+    width: 22,
+    height: 22,
+    marginHorizontal: -1,
+    marginTop: 2,
+  },
+
+  headerDate: {
+    color: COLORS.navy,
+    fontSize: 15,
     fontWeight: "900",
     textAlign: "center",
-    marginTop: 3,
-    marginBottom: 8,
+    marginTop: 9,
+    marginBottom: 20,
   },
 
-  compassCard: {
-    height: 185,
-    marginHorizontal: 13,
-    borderRadius: 16,
-    borderWidth: 4,
-    borderColor: COLORS.gold,
-    backgroundColor: COLORS.deepBlue,
-    overflow: "hidden",
-    position: "relative",
-  },
-
-  glowCircle: {
-    position: "absolute",
-    width: 180,
-    height: 105,
-    borderRadius: 90,
-    backgroundColor: "rgba(213, 161, 45, 0.55)",
-    left: "50%",
-    top: "50%",
-    marginLeft: -90,
-    marginTop: -52,
-    transform: [{ scaleX: 1.25 }],
-  },
-
-  compassStar: {
-    position: "absolute",
-    left: "50%",
-    top: "50%",
-    width: 125,
-    height: 125,
-    marginLeft: -62.5,
-    marginTop: -62.5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  needle: {
-    position: "absolute",
+  cardOuter: {
     backgroundColor: COLORS.gold,
-    borderRadius: 8,
+    borderRadius: 30,
+    padding: 7,
+    marginBottom: 22,
   },
 
-  needleVertical: {
-    width: 4,
-    height: 116,
+ compassCardInner: {
+  height: 278,
+  backgroundColor: COLORS.deepNavy,
+  borderRadius: 22,
+  alignItems: "center",
+  justifyContent: "center",
+  overflow: "hidden",
+  position: "relative",
+},
+
+mainCompass: {
+  width: 170,
+  height: 170,
+  zIndex: 4,
+  marginTop: 8,
+},
+
+lineTopLeft: {
+  left: 22,
+  top: 58,
+  width: 150,
+},
+
+lineMidLeft: {
+  left: 22,
+  top: 132,
+  width: 112,
+},
+
+lineMidRight: {
+  right: 22,
+  top: 132,
+  width: 112,
+},
+
+lineBottomRight: {
+  right: 22,
+  bottom: 63,
+  width: 132,
+},
+
+labelTopLeft: {
+  position: "absolute",
+  left: 22,
+  top: 42,
+  width: 135,
+  zIndex: 6,
+},
+
+labelMiddleLeft: {
+  position: "absolute",
+  left: 22,
+  top: 116,
+  width: 125,
+  zIndex: 6,
+},
+
+labelMiddleRight: {
+  position: "absolute",
+  right: 22,
+  top: 116,
+  width: 125,
+  alignItems: "flex-end",
+  zIndex: 6,
+},
+
+labelBottomRight: {
+  position: "absolute",
+  right: 22,
+  bottom: 42,
+  width: 140,
+  alignItems: "flex-end",
+  zIndex: 6,
+},
+
+  compassLabelTitle: {
+  color: COLORS.gold,
+  fontSize: 10,
+  fontWeight: "900",
+  lineHeight: 12,
+},
+
+compassLabelTitleWhite: {
+  color: COLORS.white,
+  fontSize: 10,
+  fontWeight: "900",
+  lineHeight: 12,
+  textShadowColor: COLORS.gold,
+  textShadowOffset: { width: 0, height: 0 },
+  textShadowRadius: 4,
+},
+
+compassLabelSub: {
+  color: COLORS.goldLight,
+  fontSize: 6.4,
+  fontWeight: "800",
+  lineHeight: 7.4,
+  marginTop: 2,
+},
+
+
+  cardOuterSmall: {
+    backgroundColor: COLORS.gold,
+    borderRadius: 28,
+    padding: 8,
+    marginBottom: 22,
   },
 
-  needleHorizontal: {
-    width: 116,
-    height: 4,
-  },
-
-  needleDiagonalOne: {
-    width: 100,
-    height: 4,
-    transform: [{ rotate: "45deg" }],
-  },
-
-  needleDiagonalTwo: {
-    width: 100,
-    height: 4,
-    transform: [{ rotate: "-45deg" }],
-  },
-
-  centerDot: {
-    width: 13,
-    height: 13,
-    borderRadius: 7,
-    backgroundColor: COLORS.deepBlue,
-    borderWidth: 2,
-    borderColor: COLORS.gold,
-    zIndex: 10,
-  },
-
-  directionText: {
-    position: "absolute",
-    color: COLORS.gold,
-    fontSize: 10,
-    fontWeight: "900",
-  },
-
-  north: {
-    top: 0,
-  },
-
-  south: {
-    bottom: 0,
-  },
-
-  east: {
-    right: 0,
-  },
-
-  west: {
-    left: 0,
-  },
-
-  cornerLabel: {
-    position: "absolute",
-    color: COLORS.gold,
-    fontSize: 9,
-    fontWeight: "900",
-    zIndex: 5,
-  },
-
-  topLeftLabel: {
-    left: 9,
-    top: 10,
-  },
-
-  topRightLabel: {
-    right: 12,
-    top: 65,
-  },
-
-  bottomLeftLabel: {
-    left: 14,
-    top: 75,
-  },
-
-  bottomRightLabel: {
-    right: 8,
-    bottom: 15,
-  },
-
-  cornerSmallText: {
-    position: "absolute",
-    color: COLORS.lightGold,
-    fontSize: 5.5,
-    fontWeight: "700",
-    lineHeight: 7,
-    zIndex: 5,
-  },
-
-  topLeftSmall: {
-    left: 12,
-    top: 24,
-  },
-
-  topRightSmall: {
-    right: 10,
-    top: 80,
-    textAlign: "right",
-  },
-
-  bottomLeftSmall: {
-    left: 14,
-    top: 90,
-  },
-
-  bottomRightSmall: {
-    right: 8,
-    bottom: 5,
-    textAlign: "right",
-  },
-
-  insightCard: {
-    marginHorizontal: 13,
-    marginTop: 11,
-    borderRadius: 16,
-    borderWidth: 4,
-    borderColor: COLORS.gold,
-    backgroundColor: COLORS.deepBlue,
-    minHeight: 85,
+  insightCardInner: {
+    minHeight: 145,
+    backgroundColor: COLORS.deepNavy,
+    borderRadius: 18,
+    paddingHorizontal: 20,
+    paddingVertical: 22,
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 12,
   },
 
-  cardTitle: {
+  softSectionTitle: {
     color: COLORS.gold,
-    fontSize: 23,
+    fontSize: 27,
+    fontWeight: "400",
+    marginBottom: 20,
+    alignSelf: "flex-start",
+  },
+
+  insightText: {
+    color: COLORS.goldLight,
+    fontSize: 16,
     fontWeight: "500",
     textAlign: "center",
-    marginBottom: 5,
+    lineHeight: 22,
   },
 
-  cardText: {
-    color: COLORS.gold,
-    fontSize: 12,
-    fontWeight: "700",
-    textAlign: "center",
-    lineHeight: 17,
-  },
-
-  summaryCard: {
-    marginHorizontal: 13,
-    marginTop: 11,
-    borderRadius: 16,
-    borderWidth: 4,
-    borderColor: COLORS.gold,
-    backgroundColor: COLORS.deepBlue,
-    minHeight: 145,
-    paddingVertical: 12,
-    paddingHorizontal: 13,
-  },
-
-  summaryContent: {
-    flexDirection: "row",
-    marginTop: 4,
-    alignItems: "center",
-  },
-
-  summaryLabels: {
-    width: "42%",
-  },
-
-  summaryLabel: {
-    color: COLORS.gold,
-    fontSize: 9,
-    fontWeight: "800",
-    marginBottom: 10,
-  },
-
-  chartBox: {
-    flex: 1,
-    height: 90,
-    position: "relative",
-    overflow: "hidden",
-  },
-
-  chartLine: {
-    position: "absolute",
-    width: 130,
-    borderTopWidth: 2,
-    borderRadius: 20,
-  },
-
-  lineOne: {
-    borderColor: COLORS.gold,
-    top: 18,
-    left: 0,
-    transform: [{ rotate: "12deg" }],
-  },
-
-  lineTwo: {
-    borderColor: COLORS.paleBlue,
-    top: 38,
-    left: 0,
-    transform: [{ rotate: "-10deg" }],
-  },
-
-  lineThree: {
-    borderColor: COLORS.lightGold,
-    top: 58,
-    left: 5,
-    transform: [{ rotate: "20deg" }],
-  },
-
-  lineFour: {
-    borderColor: COLORS.white,
-    top: 72,
-    left: 4,
-    transform: [{ rotate: "-18deg" }],
-  },
-
-  chartDot: {
-    position: "absolute",
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-  },
-
-  dotOne: {
+  cardOuterSummary: {
     backgroundColor: COLORS.gold,
-    top: 15,
-    right: 25,
+    borderRadius: 28,
+    padding: 8,
   },
 
-  dotTwo: {
-    backgroundColor: COLORS.paleBlue,
-    top: 34,
-    right: 48,
+  summaryCardInner: {
+    minHeight: 225,
+    backgroundColor: COLORS.deepNavy,
+    borderRadius: 18,
+    paddingHorizontal: 22,
+    paddingVertical: 22,
   },
 
-  dotThree: {
-    backgroundColor: COLORS.lightGold,
-    top: 55,
-    right: 14,
-  },
-
-  dotFour: {
-    backgroundColor: COLORS.white,
-    top: 70,
-    right: 35,
-  },
-
-  explanationGrid: {
-    marginHorizontal: 13,
-    marginTop: 13,
+  summaryRow: {
     flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 9,
+    alignItems: "center",
     justifyContent: "space-between",
   },
 
-  miniCard: {
-    width: "48%",
-    minHeight: 82,
-    backgroundColor: COLORS.white,
-    borderRadius: 15,
-    borderWidth: 2,
-    borderColor: COLORS.gold,
-    padding: 10,
+  legendColumn: {
+    width: "42%",
+    paddingTop: 5,
   },
 
-  miniTitle: {
-    color: COLORS.darkBlue,
-    fontSize: 13,
-    fontWeight: "900",
-    marginBottom: 5,
+  legendText: {
+    color: COLORS.gold,
+    fontSize: 15,
+    fontWeight: "400",
+    lineHeight: 31,
   },
 
-  miniText: {
-    color: COLORS.darkBlue,
-    fontSize: 10,
-    fontWeight: "700",
-    lineHeight: 14,
+  graphImage: {
+    width: 205,
+    height: 145,
+    marginLeft: 6,
   },
 });

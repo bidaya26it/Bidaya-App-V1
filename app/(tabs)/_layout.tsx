@@ -107,6 +107,24 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+  name="settings"
+  options={{
+    title: "Settings",
+    tabBarIcon: ({ color, size }) => (
+      <Ionicons name="settings" size={size} color={color} />
+    ),
+  }}
+/>
+<Tabs.Screen
+  name="ai-chatbot"
+  options={{
+    title: "AI",
+    tabBarIcon: ({ color, size }) => (
+      <Ionicons name="chatbubble-ellipses" size={size} color={color} />
+    ),
+  }}
+/>
 
       <Tabs.Screen
         name="login"
@@ -117,6 +135,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+  name="community"
+  options={{
+    title: "Com...",
+    tabBarIcon: ({ color, size }) => (
+      <Ionicons name="compass" size={size} color={color} />
+    ),
+  }}
+/>
 
       <Tabs.Screen name="signup-step-1" options={{ href: null }} />
       <Tabs.Screen name="signup-step-2" options={{ href: null }} />
