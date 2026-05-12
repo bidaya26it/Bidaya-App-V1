@@ -6,9 +6,11 @@ import { HapticTab } from "@/components/haptic-tab";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
+import { LanguageProvider, useLanguage } from "../LanguageContext";
 
-export default function TabLayout() {
+function TabsContent() {
   const colorScheme = useColorScheme();
+  const { t } = useLanguage();
 
   return (
     <Tabs
@@ -21,7 +23,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: t.home,
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="house.fill" color={color} />
           ),
@@ -31,7 +33,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="blueprint-intro"
         options={{
-          title: "Blueprint",
+          title: t.blueprint,
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="paperplane.fill" color={color} />
           ),
@@ -41,7 +43,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="opportunities"
         options={{
-          title: "Opportunities",
+          title: t.opportunities,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="search" size={size} color={color} />
           ),
@@ -51,7 +53,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Profile",
+          title: t.profile,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" size={size} color={color} />
           ),
@@ -61,7 +63,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="goals"
         options={{
-          title: "Goals",
+          title: t.goals,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="flag" size={size} color={color} />
           ),
@@ -71,7 +73,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="timeline"
         options={{
-          title: "Timeline",
+          title: t.timeline,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="map" size={size} color={color} />
           ),
@@ -81,7 +83,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="compass"
         options={{
-          title: "Compass",
+          title: t.compass,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="compass" size={size} color={color} />
           ),
@@ -91,7 +93,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="subscription"
         options={{
-          title: "Plans",
+          title: t.plans,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="diamond" size={size} color={color} />
           ),
@@ -101,54 +103,64 @@ export default function TabLayout() {
       <Tabs.Screen
         name="payment"
         options={{
-          title: "Payment",
+          title: t.payment,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="card" size={size} color={color} />
           ),
         }}
       />
+
       <Tabs.Screen
-  name="settings"
-  options={{
-    title: "Settings",
-    tabBarIcon: ({ color, size }) => (
-      <Ionicons name="settings" size={size} color={color} />
-    ),
-  }}
-/>
-<Tabs.Screen
-  name="ai-chatbot"
-  options={{
-    title: "AI",
-    tabBarIcon: ({ color, size }) => (
-      <Ionicons name="chatbubble-ellipses" size={size} color={color} />
-    ),
-  }}
-/>
+        name="settings"
+        options={{
+          title: t.settings,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="settings" size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="ai-chatbot"
+        options={{
+          title: t.ai,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="chatbubble-ellipses" size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="community"
+        options={{
+          title: t.community,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="people" size={size} color={color} />
+          ),
+        }}
+      />
 
       <Tabs.Screen
         name="login"
         options={{
-          title: "Login",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="log-in" size={size} color={color} />
-          ),
+          href: null,
+          title: t.login,
         }}
       />
-      <Tabs.Screen
-  name="community"
-  options={{
-    title: "Com...",
-    tabBarIcon: ({ color, size }) => (
-      <Ionicons name="compass" size={size} color={color} />
-    ),
-  }}
-/>
 
       <Tabs.Screen name="signup-step-1" options={{ href: null }} />
       <Tabs.Screen name="signup-step-2" options={{ href: null }} />
       <Tabs.Screen name="blueprint-question" options={{ href: null }} />
       <Tabs.Screen name="modal" options={{ href: null }} />
+      <Tabs.Screen name="cv" options={{ href: null }} />
     </Tabs>
+  );
+}
+
+export default function TabLayout() {
+  return (
+    <LanguageProvider>
+      <TabsContent />
+    </LanguageProvider>
   );
 }

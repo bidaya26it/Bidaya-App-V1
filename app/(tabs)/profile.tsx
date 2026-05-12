@@ -1,142 +1,214 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Link } from "expo-router";
-import React from "react";
 import {
+  Image,
+  ImageSourcePropType,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from "react-native";
+import Svg, { Path } from "react-native-svg";
 
 const COLORS = {
   cream: "#F7F5EC",
-  darkBlue: "#004B6B",
   deepBlue: "#003F5C",
   gold: "#D5A12D",
-  lightGold: "#EBCB78",
   white: "#FFFFFF",
+  greyAvatar: "#D9D9D9",
 };
 
-const badges = [
-  "Attended 20\nVolunteering\nActivities",
-  "Attended a\nMicrosoft\nWorkshop",
-  "Attended 15\nInternships",
-  "Attended 10\nWorkshops",
+const badgeIcon = require("../../assets/images/badge-check.png");
+const certificateIcon = require("../../assets/images/money-card.png");
+
+type ProfileItem = {
+  text: string;
+  icon: ImageSourcePropType;
+};
+
+const badges: ProfileItem[] = [
+  {
+    text: "Attended 20\nVolunteering\nActivities",
+    icon: badgeIcon,
+  },
+  {
+    text: "Attended a\nMicrosoft\nWorkshop",
+    icon: badgeIcon,
+  },
+  {
+    text: "Attended 15\nInternships",
+    icon: badgeIcon,
+  },
+  {
+    text: "Attended 10\nWorkshops",
+    icon: badgeIcon,
+  },
 ];
 
-const certificates = [
-  "Certificate of\nAppreciation",
-  "Certificate of\nParticipation -\nMicrosoft Workshop",
-  "Certificate of\nRecognition",
-  "Certificate of\nAchievement",
+const certificates: ProfileItem[] = [
+  {
+    text: "Certificate of\nAppreciation",
+    icon: certificateIcon,
+  },
+  {
+    text: "Certificate of\nParticipation -\nMicrosoft Workshop",
+    icon: certificateIcon,
+  },
+  {
+    text: "Certificate of\nRecognition",
+    icon: certificateIcon,
+  },
+  {
+    text: "Certificate of\nAchievement",
+    icon: certificateIcon,
+  },
 ];
+
+function WaveDivider() {
+  return (
+    <Svg width={70} height={315} viewBox="0 0 70 315" style={styles.waveSvg}>
+      <Path
+        d="
+          M18 0
+          C45 65 45 112 26 157
+          C7 202 7 250 18 315
+          L52 315
+          C41 250 41 202 60 157
+          C79 112 79 65 52 0
+          Z
+        "
+        fill={COLORS.cream}
+      />
+
+      <Path
+        d="
+          M18 0
+          C45 65 45 112 26 157
+          C7 202 7 250 18 315
+        "
+        fill="none"
+        stroke={COLORS.gold}
+        strokeWidth={2}
+      />
+
+      <Path
+        d="
+          M52 0
+          C41 65 41 112 60 157
+          C79 202 79 250 52 315
+        "
+        fill="none"
+        stroke={COLORS.gold}
+        strokeWidth={2}
+      />
+    </Svg>
+  );
+}
 
 export default function ProfileScreen() {
+  const { width } = useWindowDimensions();
+
+  const contentWidth = Math.min(width, 390);
+  const cardWidth = contentWidth - 54;
+
   return (
-    <View style={styles.safe}>
-      <ScrollView contentContainerStyle={styles.container}>
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity>
-            <Ionicons name="arrow-back" size={25} color={COLORS.darkBlue} />
-          </TouchableOpacity>
+    <SafeAreaView style={styles.safe}>
+      <ScrollView
+        style={styles.page}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.screenInner}>
+          <View style={styles.header}>
+            <TouchableOpacity activeOpacity={0.7}>
+              <Ionicons name="arrow-back" size={20} color={COLORS.deepBlue} />
+            </TouchableOpacity>
 
-          <Text style={styles.headerTitle}>My Profile</Text>
+            <Text style={styles.headerTitle}>My Profile</Text>
 
-          <TouchableOpacity>
-            <Ionicons name="menu" size={31} color={COLORS.darkBlue} />
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity activeOpacity={0.7}>
+              <Ionicons name="menu" size={25} color={COLORS.deepBlue} />
+            </TouchableOpacity>
+          </View>
 
-        {/* Profile Top */}
-        <View style={styles.profileTop}>
-          <View style={styles.avatarOuter}>
-            <View style={styles.avatarCircle}>
-              <Ionicons name="person" size={54} color="#D0D0D0" />
+          <View style={styles.profileTop}>
+            <View style={styles.avatarOuter}>
+              <View style={styles.avatarCircle}>
+                <Ionicons name="person" size={43} color={COLORS.white} />
+              </View>
+            </View>
+
+            <View style={styles.editSlash} />
+
+            <Text style={styles.name}>John Doe</Text>
+            <Text style={styles.info}>Age: 24</Text>
+            <Text style={styles.info}>Sex: Male</Text>
+            <Text style={styles.email}>xxxxxxxx@example.com</Text>
+
+            <TouchableOpacity style={styles.cvButton} activeOpacity={0.85}>
+              <Text style={styles.cvText}>My CV</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={[styles.tabsRow, { width: cardWidth }]}>
+            <View style={styles.tabPill}>
+              <Text style={styles.tabText}>Badges</Text>
+            </View>
+
+            <View style={styles.tabGap} />
+
+            <View style={styles.tabPill}>
+              <Text style={styles.tabText}>Certificates</Text>
             </View>
           </View>
 
-          <View style={styles.pencil}>
-            <Ionicons name="pencil" size={13} color={COLORS.white} />
-          </View>
+          <View style={[styles.cardsWrap, { width: cardWidth }]}>
+            <View style={styles.leftCard}>
+              <TouchableOpacity style={styles.leftArrow} activeOpacity={0.7}>
+                <Ionicons name="chevron-back" size={14} color={COLORS.white} />
+              </TouchableOpacity>
 
-          <Text style={styles.name}>John Doe</Text>
-          <Text style={styles.info}>Age: 24</Text>
-          <Text style={styles.info}>Sex: Male</Text>
-          <Text style={styles.email}>xxxxxxxx@example.com</Text>
-
-          <Link href="/cv" asChild>
-            <TouchableOpacity style={styles.cvButton}>
-              <Text style={styles.cvButtonText}>My CV</Text>
-            </TouchableOpacity>
-          </Link>
-        </View>
-
-        {/* Badges / Certificates Titles */}
-        <View style={styles.tabsRow}>
-          <View style={styles.tabButton}>
-            <Text style={styles.tabButtonText}>Badges</Text>
-          </View>
-
-          <View style={styles.tabButton}>
-            <Text style={styles.tabButtonText}>Certificates</Text>
-          </View>
-        </View>
-
-        {/* Panels */}
-        <View style={styles.panelsWrapper}>
-          {/* Left Panel */}
-          <View style={styles.leftPanel}>
-            {badges.map((badge, index) => (
-              <View key={index} style={styles.badgeItem}>
-                <View style={styles.medalIcon}>
-                  <Ionicons
-                    name="checkmark-circle-outline"
-                    size={36}
-                    color={COLORS.gold}
-                  />
-                  <View style={styles.medalRibbonLeft} />
-                  <View style={styles.medalRibbonRight} />
-                </View>
-
-                <Text style={styles.panelText}>{badge}</Text>
+              <View style={styles.badgeList}>
+                {badges.map((item, index) => (
+                  <View key={index} style={styles.badgeItem}>
+                    <Image source={item.icon} style={styles.badgeImage} />
+                    <Text style={styles.badgeText}>{item.text}</Text>
+                  </View>
+                ))}
               </View>
-            ))}
+            </View>
 
-            <TouchableOpacity style={styles.leftArrow}>
-              <Ionicons name="chevron-back" size={16} color={COLORS.white} />
-            </TouchableOpacity>
-          </View>
+            <View style={styles.rightCard}>
+              <TouchableOpacity style={styles.rightArrow} activeOpacity={0.7}>
+                <Ionicons
+                  name="chevron-forward"
+                  size={14}
+                  color={COLORS.white}
+                />
+              </TouchableOpacity>
 
-          {/* Center Divider */}
-          <View style={styles.centerCurve} />
-
-          {/* Right Panel */}
-          <View style={styles.rightPanel}>
-            {certificates.map((certificate, index) => (
-              <View key={index} style={styles.certificateItem}>
-                <View style={styles.certificateIcon}>
-                  <View style={styles.certLineLong} />
-                  <View style={styles.certLineShort} />
-                  <Ionicons
-                    name="ribbon-outline"
-                    size={20}
-                    color={COLORS.gold}
-                  />
-                </View>
-
-                <Text style={styles.panelText}>{certificate}</Text>
+              <View style={styles.certificateList}>
+                {certificates.map((item, index) => (
+                  <View key={index} style={styles.certificateItem}>
+                    <Image
+                      source={item.icon}
+                      style={styles.certificateImage}
+                    />
+                    <Text style={styles.certificateText}>{item.text}</Text>
+                  </View>
+                ))}
               </View>
-            ))}
+            </View>
 
-            <TouchableOpacity style={styles.rightArrow}>
-              <Ionicons name="chevron-forward" size={16} color={COLORS.white} />
-            </TouchableOpacity>
+            <View pointerEvents="none" style={styles.waveHolder}>
+              <WaveDivider />
+            </View>
           </View>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -146,26 +218,41 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.cream,
   },
 
-  container: {
+  page: {
+    flex: 1,
     backgroundColor: COLORS.cream,
-    paddingBottom: 18,
+  },
+
+  scrollContent: {
+    minHeight: "100%",
+    paddingBottom: 95,
+    backgroundColor: COLORS.cream,
+  },
+
+  screenInner: {
+    width: "100%",
+    alignItems: "center",
+    backgroundColor: COLORS.cream,
   },
 
   header: {
-    height: 43,
-    paddingHorizontal: 10,
+    width: "100%",
+    height: 38,
+    paddingHorizontal: 12,
     borderBottomWidth: 1,
-    borderBottomColor: "#D7D7D7",
+    borderBottomColor: "#DADADA",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    backgroundColor: COLORS.cream,
   },
 
   headerTitle: {
-    color: COLORS.darkBlue,
-    fontSize: 23,
+    fontSize: 20,
+    lineHeight: 23,
     fontWeight: "900",
-    textAlign: "center",
+    color: COLORS.deepBlue,
+    letterSpacing: 0.2,
   },
 
   profileTop: {
@@ -174,259 +261,236 @@ const styles = StyleSheet.create({
   },
 
   avatarOuter: {
-    width: 76,
-    height: 76,
-    borderRadius: 38,
-    borderWidth: 1.5,
-    borderColor: COLORS.gold,
-    borderStyle: "dotted",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  avatarCircle: {
     width: 68,
     height: 68,
     borderRadius: 34,
-    backgroundColor: "#E8E8E8",
+    borderWidth: 1,
+    borderStyle: "dotted",
+    borderColor: COLORS.gold,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: COLORS.cream,
+  },
+
+  avatarCircle: {
+    width: 55,
+    height: 55,
+    borderRadius: 28,
+    backgroundColor: COLORS.greyAvatar,
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden",
   },
 
-  pencil: {
-    width: 24,
-    height: 8,
-    borderRadius: 6,
+  editSlash: {
+    width: 19,
+    height: 5,
     backgroundColor: COLORS.gold,
+    borderRadius: 10,
     transform: [{ rotate: "-45deg" }],
-    marginTop: -13,
-    marginLeft: 58,
-    marginBottom: 4,
-    alignItems: "center",
-    justifyContent: "center",
+    marginTop: -9,
+    marginLeft: 50,
   },
 
   name: {
-    color: COLORS.darkBlue,
-    fontSize: 23,
+    marginTop: 5,
+    fontSize: 21,
+    lineHeight: 22,
     fontWeight: "900",
-    lineHeight: 25,
-    marginTop: 2,
+    color: COLORS.deepBlue,
+    letterSpacing: 0.2,
   },
 
   info: {
-    color: COLORS.darkBlue,
-    fontSize: 16,
+    fontSize: 12,
+    lineHeight: 14,
     fontWeight: "900",
-    lineHeight: 18,
+    color: COLORS.deepBlue,
   },
 
   email: {
-    color: COLORS.darkBlue,
-    fontSize: 10,
-    fontWeight: "900",
     marginTop: 1,
-    marginBottom: 4,
+    fontSize: 8.7,
+    lineHeight: 10,
+    fontWeight: "900",
+    color: COLORS.deepBlue,
+    textDecorationLine: "underline",
   },
 
   cvButton: {
-    backgroundColor: COLORS.gold,
+    marginTop: 5,
+    width: 110,
+    height: 18,
     borderRadius: 12,
-    width: 118,
-    height: 22,
+    backgroundColor: COLORS.gold,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 4,
   },
 
-  cvButtonText: {
-    color: COLORS.darkBlue,
-    fontSize: 15,
+  cvText: {
+    color: COLORS.deepBlue,
+    fontSize: 11,
+    lineHeight: 13,
     fontWeight: "900",
   },
 
   tabsRow: {
+    marginTop: 7,
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "center",
-    gap: 4,
-    paddingHorizontal: 8,
-    zIndex: 10,
+    zIndex: 70,
   },
 
-  tabButton: {
-    flex: 1,
-    maxWidth: 120,
-    height: 22,
+  tabPill: {
+    width: 98,
+    height: 15,
+    borderRadius: 10,
     backgroundColor: COLORS.deepBlue,
+    borderWidth: 1.4,
     borderColor: COLORS.gold,
-    borderWidth: 2,
-    borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
   },
 
-  tabButtonText: {
+  tabGap: {
+    width: 35,
+  },
+
+  tabText: {
     color: COLORS.gold,
-    fontSize: 15,
+    fontSize: 9.6,
+    lineHeight: 11,
     fontWeight: "900",
   },
 
-  panelsWrapper: {
-    marginHorizontal: 7,
-    marginTop: 2,
-    minHeight: 330,
+  cardsWrap: {
+    marginTop: -1,
+    height: 315,
     flexDirection: "row",
+    alignItems: "stretch",
+    justifyContent: "center",
     position: "relative",
   },
 
-  leftPanel: {
+  leftCard: {
     flex: 1,
     backgroundColor: COLORS.deepBlue,
-    borderColor: COLORS.gold,
-    borderWidth: 2.5,
-    borderTopLeftRadius: 23,
-    borderBottomLeftRadius: 23,
-    borderTopRightRadius: 34,
-    borderBottomRightRadius: 34,
-    paddingTop: 11,
-    paddingBottom: 12,
-    alignItems: "center",
-    justifyContent: "space-around",
-    paddingRight: 11,
-  },
-
-  rightPanel: {
-    flex: 1,
-    backgroundColor: COLORS.deepBlue,
-    borderColor: COLORS.gold,
-    borderWidth: 2.5,
-    borderTopRightRadius: 23,
-    borderBottomRightRadius: 23,
-    borderTopLeftRadius: 34,
-    borderBottomLeftRadius: 34,
-    paddingTop: 11,
-    paddingBottom: 12,
-    alignItems: "center",
-    justifyContent: "space-around",
-    paddingLeft: 11,
-  },
-
-  centerCurve: {
-    position: "absolute",
-    left: "50%",
-    top: 0,
-    bottom: 0,
-    width: 28,
-    marginLeft: -14,
-    backgroundColor: COLORS.cream,
-    borderLeftWidth: 2.5,
-    borderRightWidth: 2.5,
-    borderColor: COLORS.gold,
-    borderTopLeftRadius: 60,
-    borderTopRightRadius: 60,
-    borderBottomLeftRadius: 60,
-    borderBottomRightRadius: 60,
-    zIndex: 5,
-  },
-
-  badgeItem: {
-    alignItems: "center",
-    width: "100%",
-  },
-
-  certificateItem: {
-    alignItems: "center",
-    width: "100%",
-  },
-
-  medalIcon: {
-    width: 47,
-    height: 47,
-    borderRadius: 23.5,
     borderWidth: 2,
     borderColor: COLORS.gold,
+    borderTopLeftRadius: 16,
+    borderBottomLeftRadius: 16,
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
     alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 2,
+    overflow: "hidden",
   },
 
-  medalRibbonLeft: {
-    position: "absolute",
-    bottom: -11,
-    left: 13,
-    width: 9,
-    height: 17,
-    backgroundColor: COLORS.gold,
-    transform: [{ rotate: "22deg" }],
-  },
-
-  medalRibbonRight: {
-    position: "absolute",
-    bottom: -11,
-    right: 13,
-    width: 9,
-    height: 17,
-    backgroundColor: COLORS.gold,
-    transform: [{ rotate: "-22deg" }],
-  },
-
-  certificateIcon: {
-    width: 54,
-    height: 39,
-    borderWidth: 3,
+  rightCard: {
+    flex: 1,
+    backgroundColor: COLORS.deepBlue,
+    borderWidth: 2,
     borderColor: COLORS.gold,
-    backgroundColor: "#0B5878",
+    borderTopRightRadius: 16,
+    borderBottomRightRadius: 16,
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
+    alignItems: "center",
+    overflow: "hidden",
+  },
+
+  waveHolder: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: "50%",
+    width: 70,
+    marginLeft: -35,
+    zIndex: 50,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 3,
   },
 
-  certLineLong: {
-    width: 24,
-    height: 2,
-    backgroundColor: COLORS.gold,
-    marginBottom: 5,
+  waveSvg: {
+    position: "absolute",
+    top: 0,
   },
 
-  certLineShort: {
-    width: 15,
-    height: 2,
-    backgroundColor: COLORS.gold,
-    marginBottom: 2,
+  badgeList: {
+    paddingTop: 14,
+    alignItems: "center",
   },
 
-  panelText: {
-    color: COLORS.gold,
-    fontSize: 7.5,
-    fontWeight: "800",
-    lineHeight: 9,
-    textAlign: "center",
+  certificateList: {
+    paddingTop: 14,
+    alignItems: "center",
   },
 
   leftArrow: {
     position: "absolute",
     left: 6,
-    top: "47%",
-    width: 18,
-    height: 18,
-    borderRadius: 9,
+    top: 139,
+    width: 16,
+    height: 16,
+    borderRadius: 8,
     backgroundColor: COLORS.gold,
     alignItems: "center",
     justifyContent: "center",
-    zIndex: 20,
+    zIndex: 90,
   },
 
   rightArrow: {
     position: "absolute",
     right: 6,
-    top: "47%",
-    width: 18,
-    height: 18,
-    borderRadius: 9,
+    top: 139,
+    width: 16,
+    height: 16,
+    borderRadius: 8,
     backgroundColor: COLORS.gold,
     alignItems: "center",
     justifyContent: "center",
-    zIndex: 20,
+    zIndex: 90,
+  },
+
+  badgeItem: {
+    alignItems: "center",
+    marginBottom: 11,
+  },
+
+  badgeImage: {
+    width: 43,
+    height: 43,
+    resizeMode: "contain",
+  },
+
+  badgeText: {
+    marginTop: -3,
+    color: COLORS.gold,
+    fontSize: 6.4,
+    lineHeight: 7.3,
+    fontWeight: "900",
+    textAlign: "center",
+    width: 64,
+  },
+
+  certificateItem: {
+    alignItems: "center",
+    marginBottom: 16,
+  },
+
+  certificateImage: {
+    width: 47,
+    height: 32,
+    resizeMode: "contain",
+  },
+
+  certificateText: {
+    marginTop: 1,
+    color: COLORS.gold,
+    fontSize: 5.8,
+    lineHeight: 6.7,
+    fontWeight: "900",
+    textAlign: "center",
+    width: 76,
   },
 });

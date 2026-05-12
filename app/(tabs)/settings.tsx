@@ -1,14 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Switch,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import * as RN from "react-native";
+import { useLanguage } from "../LanguageContext";
 
 const COLORS = {
   cream: "#F7F5EC",
@@ -26,6 +19,8 @@ const COLORS = {
 type TabType = "accessibility" | "support" | "notifications";
 
 export default function SettingsScreen() {
+  const { language, toggleLanguage, t } = useLanguage();
+
   const [activeTab, setActiveTab] = useState<TabType>("accessibility");
   const [hasCondition, setHasCondition] = useState(false);
   const [dailyPrompts, setDailyPrompts] = useState(true);
@@ -33,74 +28,84 @@ export default function SettingsScreen() {
   const [frequency, setFrequency] = useState("moderate");
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <ScrollView contentContainerStyle={styles.container}>
+    <RN.SafeAreaView style={styles.safe}>
+      <RN.ScrollView contentContainerStyle={styles.container}>
         {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity>
+        <RN.View style={styles.header}>
+          <RN.TouchableOpacity>
             <Ionicons name="arrow-back" size={25} color={COLORS.darkBlue} />
-          </TouchableOpacity>
+          </RN.TouchableOpacity>
 
-          <Text style={styles.headerTitle}>Settings</Text>
+          <RN.Text style={styles.headerTitle}>{t.settings}</RN.Text>
 
-          <TouchableOpacity>
+          <RN.TouchableOpacity>
             <Ionicons name="menu" size={31} color={COLORS.darkBlue} />
-          </TouchableOpacity>
-        </View>
+          </RN.TouchableOpacity>
+        </RN.View>
+
+        {/* Language Button */}
+        <RN.TouchableOpacity
+          style={styles.languageButton}
+          onPress={toggleLanguage}
+        >
+          <RN.Text style={styles.languageButtonText}>
+            {language === "en" ? "العربية" : "English"}
+          </RN.Text>
+        </RN.TouchableOpacity>
 
         {/* Tabs */}
-        <View style={styles.tabsWrapper}>
-          <TouchableOpacity
+        <RN.View style={styles.tabsWrapper}>
+          <RN.TouchableOpacity
             style={[
               styles.tabButton,
               activeTab === "accessibility" && styles.activeAccessibilityTab,
             ]}
             onPress={() => setActiveTab("accessibility")}
           >
-            <Text
+            <RN.Text
               style={[
                 styles.tabText,
                 activeTab === "accessibility" && styles.activeTabText,
               ]}
             >
-              Accessibility
-            </Text>
-          </TouchableOpacity>
+              {t.accessibility}
+            </RN.Text>
+          </RN.TouchableOpacity>
 
-          <TouchableOpacity
+          <RN.TouchableOpacity
             style={[
               styles.tabButton,
               activeTab === "support" && styles.activeSupportTab,
             ]}
             onPress={() => setActiveTab("support")}
           >
-            <Text
+            <RN.Text
               style={[
                 styles.tabText,
                 activeTab === "support" && styles.activeTabText,
               ]}
             >
-              Support
-            </Text>
-          </TouchableOpacity>
+              {t.support}
+            </RN.Text>
+          </RN.TouchableOpacity>
 
-          <TouchableOpacity
+          <RN.TouchableOpacity
             style={[
               styles.tabButton,
               activeTab === "notifications" && styles.activeNotificationTab,
             ]}
             onPress={() => setActiveTab("notifications")}
           >
-            <Text
+            <RN.Text
               style={[
                 styles.tabText,
                 activeTab === "notifications" && styles.activeTabText,
               ]}
             >
-              Notifications
-            </Text>
-          </TouchableOpacity>
-        </View>
+              {t.notifications}
+            </RN.Text>
+          </RN.TouchableOpacity>
+        </RN.View>
 
         {activeTab === "accessibility" && <AccessibilityContent />}
 
@@ -121,45 +126,45 @@ export default function SettingsScreen() {
             setFrequency={setFrequency}
           />
         )}
-      </ScrollView>
-    </SafeAreaView>
+      </RN.ScrollView>
+    </RN.SafeAreaView>
   );
 }
 
 function AccessibilityContent() {
   return (
-    <View style={styles.content}>
-      <View style={styles.sectionHeader}>
-        <View style={styles.iconBoxBlue}>
+    <RN.View style={styles.content}>
+      <RN.View style={styles.sectionHeader}>
+        <RN.View style={styles.iconBoxBlue}>
           <Ionicons name="eye-outline" size={25} color={COLORS.darkBlue} />
-        </View>
+        </RN.View>
 
-        <View>
-          <Text style={styles.mainSectionTitle}>Accessibility</Text>
-          <Text style={styles.mainSectionSub}>
+        <RN.View>
+          <RN.Text style={styles.mainSectionTitle}>Accessibility</RN.Text>
+          <RN.Text style={styles.mainSectionSub}>
             Customize your experience for comfort
-          </Text>
-        </View>
-      </View>
+          </RN.Text>
+        </RN.View>
+      </RN.View>
 
-      <View style={styles.optionCard}>
-        <Text style={styles.optionTitle}>Color Theme</Text>
+      <RN.View style={styles.optionCard}>
+        <RN.Text style={styles.optionTitle}>Color Theme</RN.Text>
 
-        <View style={styles.selectBox}>
-          <Text style={styles.selectText}>Default</Text>
+        <RN.View style={styles.selectBox}>
+          <RN.Text style={styles.selectText}>Default</RN.Text>
           <Ionicons name="chevron-down" size={22} color="#777" />
-        </View>
-      </View>
+        </RN.View>
+      </RN.View>
 
-      <View style={styles.optionCard}>
-        <Text style={styles.optionTitle}>Text size</Text>
+      <RN.View style={styles.optionCard}>
+        <RN.Text style={styles.optionTitle}>Text size</RN.Text>
 
-        <View style={styles.selectBox}>
-          <Text style={styles.selectText}>Medium</Text>
+        <RN.View style={styles.selectBox}>
+          <RN.Text style={styles.selectText}>Medium</RN.Text>
           <Ionicons name="chevron-down" size={22} color="#777" />
-        </View>
-      </View>
-    </View>
+        </RN.View>
+      </RN.View>
+    </RN.View>
   );
 }
 
@@ -171,52 +176,64 @@ function SupportContent({
   setHasCondition: (value: boolean) => void;
 }) {
   return (
-    <View style={styles.content}>
-      <View style={styles.sectionHeader}>
-        <View style={styles.iconBoxPurple}>
-          <Ionicons name="accessibility-outline" size={25} color={COLORS.purple} />
-        </View>
+    <RN.View style={styles.content}>
+      <RN.View style={styles.sectionHeader}>
+        <RN.View style={styles.iconBoxPurple}>
+          <Ionicons
+            name="accessibility-outline"
+            size={25}
+            color={COLORS.purple}
+          />
+        </RN.View>
 
-        <View>
-          <Text style={styles.mainSectionTitle}>Support & Accommodation</Text>
-          <Text style={styles.mainSectionSub}>Help us personalize your experience</Text>
-        </View>
-      </View>
+        <RN.View>
+          <RN.Text style={styles.mainSectionTitle}>
+            Support & Accommodation
+          </RN.Text>
+          <RN.Text style={styles.mainSectionSub}>
+            Help us personalize your experience
+          </RN.Text>
+        </RN.View>
+      </RN.View>
 
-      <View style={styles.supportInfoBox}>
-        <Text style={styles.supportInfoText}>
+      <RN.View style={styles.supportInfoBox}>
+        <RN.Text style={styles.supportInfoText}>
           This information is entirely optional and private.{"\n"}
           It helps us suggest the right experiences and{"\n"}
           make the app more comfortable for you. You{"\n"}
           are extraordinary - let us support you.
-        </Text>
-      </View>
+        </RN.Text>
+      </RN.View>
 
-      <View style={styles.switchCard}>
-        <View>
-          <Text style={styles.switchTitle}>I have a disability or condition</Text>
-          <Text style={styles.switchSub}>Enabling this personalizes recommendations</Text>
-        </View>
+      <RN.View style={styles.switchCard}>
+        <RN.View>
+          <RN.Text style={styles.switchTitle}>
+            I have a disability or condition
+          </RN.Text>
+          <RN.Text style={styles.switchSub}>
+            Enabling this personalizes recommendations
+          </RN.Text>
+        </RN.View>
 
-        <Switch
+        <RN.Switch
           value={hasCondition}
           onValueChange={setHasCondition}
           trackColor={{ false: "#AFAFAF", true: "#111111" }}
           thumbColor={COLORS.white}
         />
-      </View>
+      </RN.View>
 
       {hasCondition && (
-        <View style={styles.conditionBox}>
+        <RN.View style={styles.conditionBox}>
           <ConditionOption text="Autism (ASD)" />
           <ConditionOption text="ADHD / ADD" selected />
           <ConditionOption text="Dyslexia" />
           <ConditionOption text="Anxiety" />
           <ConditionOption text="Mobility Challenges" selected />
           <ConditionOption text="Other (please specify)" />
-        </View>
+        </RN.View>
       )}
-    </View>
+    </RN.View>
   );
 }
 
@@ -228,10 +245,10 @@ function ConditionOption({
   selected?: boolean;
 }) {
   return (
-    <View style={styles.conditionRow}>
-      <View style={[styles.radioCircle, selected && styles.radioSelected]} />
-      <Text style={styles.conditionText}>{text}</Text>
-    </View>
+    <RN.View style={styles.conditionRow}>
+      <RN.View style={[styles.radioCircle, selected && styles.radioSelected]} />
+      <RN.Text style={styles.conditionText}>{text}</RN.Text>
+    </RN.View>
   );
 }
 
@@ -251,60 +268,76 @@ function NotificationsContent({
   setFrequency: (value: string) => void;
 }) {
   return (
-    <View style={styles.content}>
-      <View style={styles.sectionHeader}>
-        <View style={styles.iconBoxGold}>
-          <Ionicons name="notifications-outline" size={25} color={COLORS.gold} />
-        </View>
+    <RN.View style={styles.content}>
+      <RN.View style={styles.sectionHeader}>
+        <RN.View style={styles.iconBoxGold}>
+          <Ionicons
+            name="notifications-outline"
+            size={25}
+            color={COLORS.gold}
+          />
+        </RN.View>
 
-        <View>
-          <Text style={styles.mainSectionTitle}>Notifications & Prompts</Text>
-          <Text style={styles.mainSectionSub}>Control how the app reaches out to you</Text>
-        </View>
-      </View>
+        <RN.View>
+          <RN.Text style={styles.mainSectionTitle}>
+            Notifications & Prompts
+          </RN.Text>
+          <RN.Text style={styles.mainSectionSub}>
+            Control how the app reaches out to you
+          </RN.Text>
+        </RN.View>
+      </RN.View>
 
-      <View style={styles.notificationCard}>
-        <View style={styles.notificationTextBox}>
-          <View style={styles.notificationIconCircle}>
+      <RN.View style={styles.notificationCard}>
+        <RN.View style={styles.notificationTextBox}>
+          <RN.View style={styles.notificationIconCircle}>
             <Ionicons name="sunny-outline" size={21} color={COLORS.gold} />
-          </View>
+          </RN.View>
 
-          <View>
-            <Text style={styles.notificationTitle}>Daily prompts</Text>
-            <Text style={styles.notificationSub}>Personality & lifestyle questions</Text>
-          </View>
-        </View>
+          <RN.View>
+            <RN.Text style={styles.notificationTitle}>Daily prompts</RN.Text>
+            <RN.Text style={styles.notificationSub}>
+              Personality & lifestyle questions
+            </RN.Text>
+          </RN.View>
+        </RN.View>
 
-        <Switch
+        <RN.Switch
           value={dailyPrompts}
           onValueChange={setDailyPrompts}
           trackColor={{ false: "#AFAFAF", true: "#111111" }}
           thumbColor={COLORS.white}
         />
-      </View>
+      </RN.View>
 
-      <View style={styles.notificationCard}>
-        <View style={styles.notificationTextBox}>
-          <View style={styles.notificationIconCircle}>
+      <RN.View style={styles.notificationCard}>
+        <RN.View style={styles.notificationTextBox}>
+          <RN.View style={styles.notificationIconCircle}>
             <Ionicons name="sparkles-outline" size={21} color={COLORS.gold} />
-          </View>
+          </RN.View>
 
-          <View>
-            <Text style={styles.notificationTitle}>Daily affirmations</Text>
-            <Text style={styles.notificationSub}>Encouragement and positive reminders</Text>
-          </View>
-        </View>
+          <RN.View>
+            <RN.Text style={styles.notificationTitle}>
+              Daily affirmations
+            </RN.Text>
+            <RN.Text style={styles.notificationSub}>
+              Encouragement and positive reminders
+            </RN.Text>
+          </RN.View>
+        </RN.View>
 
-        <Switch
+        <RN.Switch
           value={dailyAffirmations}
           onValueChange={setDailyAffirmations}
           trackColor={{ false: "#AFAFAF", true: "#111111" }}
           thumbColor={COLORS.white}
         />
-      </View>
+      </RN.View>
 
-      <View style={styles.frequencyCard}>
-        <Text style={styles.frequencyTitle}>Notification frequency</Text>
+      <RN.View style={styles.frequencyCard}>
+        <RN.Text style={styles.frequencyTitle}>
+          Notification frequency
+        </RN.Text>
 
         <FrequencyOption
           text="Minimal — only essentials"
@@ -323,8 +356,8 @@ function NotificationsContent({
           selected={frequency === "all"}
           onPress={() => setFrequency("all")}
         />
-      </View>
-    </View>
+      </RN.View>
+    </RN.View>
   );
 }
 
@@ -338,14 +371,16 @@ function FrequencyOption({
   onPress: () => void;
 }) {
   return (
-    <TouchableOpacity style={styles.frequencyRow} onPress={onPress}>
-      <View style={[styles.frequencyCircle, selected && styles.frequencySelected]} />
-      <Text style={styles.frequencyText}>{text}</Text>
-    </TouchableOpacity>
+    <RN.TouchableOpacity style={styles.frequencyRow} onPress={onPress}>
+      <RN.View
+        style={[styles.frequencyCircle, selected && styles.frequencySelected]}
+      />
+      <RN.Text style={styles.frequencyText}>{text}</RN.Text>
+    </RN.TouchableOpacity>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = RN.StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: COLORS.cream,
@@ -370,6 +405,22 @@ const styles = StyleSheet.create({
     color: COLORS.darkBlue,
     fontSize: 28,
     fontWeight: "900",
+  },
+
+  languageButton: {
+    backgroundColor: COLORS.gold,
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 20,
+    alignSelf: "center",
+    marginTop: 15,
+    marginBottom: 8,
+  },
+
+  languageButtonText: {
+    color: COLORS.deepBlue,
+    fontWeight: "bold",
+    fontSize: 14,
   },
 
   tabsWrapper: {
